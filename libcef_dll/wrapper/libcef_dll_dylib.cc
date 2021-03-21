@@ -9,10 +9,14 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=db4cbbb9dc15d33dac5a2d4ed8f86908c63839bc$
+// $hash=63b1bd0804c18b8656be7d46cf4ee159d3afc155$
 //
 
 #if defined(CEF_ENABLE_LIBRARY_LOADER)
+
+#if defined(CEF_USE_SANDBOX)
+#error "CEF library loader does not support USE_SANDBOX"
+#endif
 
 #include <stdio.h>
 #include <system_error>

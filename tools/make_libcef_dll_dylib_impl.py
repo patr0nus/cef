@@ -117,6 +117,10 @@ def make_libcef_dll_dylib_impl(header):
 
 #if defined(CEF_ENABLE_LIBRARY_LOADER)
 
+#if defined(CEF_USE_SANDBOX)
+#error "CEF library loader does not support USE_SANDBOX"
+#endif
+
 #include <stdio.h>
 #include <system_error>
 
