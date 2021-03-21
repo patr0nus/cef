@@ -9,8 +9,10 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=48d9078932deb3674b8e0c48da5d51ae2121e971$
+// $hash=db4cbbb9dc15d33dac5a2d4ed8f86908c63839bc$
 //
+
+#if defined(CEF_ENABLE_LIBRARY_LOADER)
 
 #include <stdio.h>
 #include <system_error>
@@ -92,7 +94,8 @@ void* g_libcef_handle = nullptr;
 
 void* libcef_get_ptr(const CEF_PATH_CHAR_T* path, const char* name) {
 #if defined(OS_WIN)
-  void* ptr = ::GetProcAddress((HMODULE)g_libcef_handle, name);
+  void* ptr =
+      reinterpret_cast<void*>(::GetProcAddress((HMODULE)g_libcef_handle, name));
   if (!ptr) {
     fprintf(stderr, "GetProcAddress %ls: %s\n", path,
             get_last_error_message().c_str());
@@ -2215,3 +2218,5 @@ void cef_trace_event_async_end(const char* category,
   g_libcef_pointers.cef_trace_event_async_end(
       category, name, id, arg1_name, arg1_val, arg2_name, arg2_val, copy);
 }
+
+#endif  // CEF_ENABLE_LIBRARY_LOADER

@@ -115,6 +115,8 @@ def make_libcef_dll_dylib_impl(header):
   # Build the final output.
   result = get_copyright() + """
 
+#if defined(CEF_ENABLE_LIBRARY_LOADER)
+
 #include <stdio.h>
 #include <system_error>
 
@@ -143,7 +145,7 @@ void* g_libcef_handle = nullptr;
 void* libcef_get_ptr(const CEF_PATH_CHAR_T* path, const char* name) {
 
 #if defined(OS_WIN)
-  void* ptr = ::GetProcAddress((HMODULE)g_libcef_handle, name);
+  void* ptr = reinterpret_cast<void*>(::GetProcAddress((HMODULE)g_libcef_handle, name));
   if (!ptr) {
     fprintf(stderr, "GetProcAddress %ls: %s\\n",
             path, get_last_error_message().c_str());
@@ -228,7 +230,12 @@ int cef_unload_library() {
   return result;
 }
 
-""" + ptr_impl
+""" + ptr_impl + """
+
+#endif //CEF_ENABLE_LIBRARY_LOADER
+
+"""
+
   return result
 
 
