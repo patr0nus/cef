@@ -9,14 +9,10 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=63b1bd0804c18b8656be7d46cf4ee159d3afc155$
+// $hash=06e315936d6c59048ba126af9ae783ec5aa542a4$
 //
 
-#if defined(CEF_ENABLE_LIBRARY_LOADER)
-
-#if defined(CEF_USE_SANDBOX)
-#error "CEF library loader does not support USE_SANDBOX"
-#endif
+#if defined(OS_MAC) || defined(CEF_ENABLE_LIBRARY_LOADER)
 
 #include <stdio.h>
 #include <system_error>
@@ -2223,4 +2219,4 @@ void cef_trace_event_async_end(const char* category,
       category, name, id, arg1_name, arg1_val, arg2_name, arg2_val, copy);
 }
 
-#endif  // CEF_ENABLE_LIBRARY_LOADER
+#endif  // OS_MAC || CEF_ENABLE_LIBRARY_LOADER
