@@ -115,11 +115,7 @@ def make_libcef_dll_dylib_impl(header):
   # Build the final output.
   result = get_copyright() + """
 
-#if defined(CEF_ENABLE_LIBRARY_LOADER)
-
-#if defined(CEF_USE_SANDBOX)
-#error "CEF library loader does not support USE_SANDBOX"
-#endif
+#if defined(OS_MAC) || defined(CEF_ENABLE_LIBRARY_LOADER)
 
 #include <stdio.h>
 #include <system_error>
@@ -236,7 +232,7 @@ int cef_unload_library() {
 
 """ + ptr_impl + """
 
-#endif //CEF_ENABLE_LIBRARY_LOADER
+#endif // OS_MAC || CEF_ENABLE_LIBRARY_LOADER
 
 """
 
